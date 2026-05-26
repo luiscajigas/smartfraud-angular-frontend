@@ -1,0 +1,43 @@
+<div
+  class="flex items-center gap-2 rounded-lg px-2 py-1 text-sm text-slate-700 hover:bg-emerald-50"
+  [style.paddingLeft.px]="nivel * 14"
+>
+  <button
+    type="button"
+    class="flex h-6 w-6 items-center justify-center rounded-md text-slate-600 hover:bg-emerald-100 hover:text-emerald-700"
+    *ngIf="hasChildren()"
+    (click)="toggle()"
+    [attr.aria-label]="expanded ? 'Colapsar' : 'Expandir'"
+  >
+    <span class="text-base leading-none">{{ expanded ? '▾' : '▸' }}</span>
+  </button>
+
+  <span *ngIf="!hasChildren()" class="h-6 w-6"></span>
+
+  <a
+    *ngIf="item.ruta; else noLink"
+    [routerLink]="item.ruta"
+    routerLinkActive="bg-emerald-100 text-emerald-800"
+    class="flex-1 rounded-md px-2 py-1 font-medium"
+    [routerLinkActiveOptions]="{ exact: true }"
+    >{{ item.nombre }}</a
+  >
+
+  <ng-template #noLink>
+    <button
+      type="button"
+      class="flex-1 rounded-md px-2 py-1 text-left font-semibold text-slate-800"
+      (click)="hasChildren() ? toggle() : null"
+    >
+      {{ item.nombre }}
+    </button>
+  </ng-template>
+</div>
+
+<div *ngIf="expanded && hasChildren()" class="mt-1 space-y-1">
+  <app-menu-node
+    *ngFor="let child of item.hijos"
+    [item]="child"
+    [nivel]="nivel + 1"
+  />
+</div>

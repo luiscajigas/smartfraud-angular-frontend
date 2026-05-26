@@ -1,0 +1,117 @@
+<div class="space-y-6">
+  <div class="flex items-center justify-between">
+    <h1 class="text-2xl font-semibold text-slate-900">Alertas</h1>
+    <button class="sf-btn-ghost" (click)="cargar()">Refrescar</button>
+  </div>
+
+  <div class="grid grid-cols-1 gap-4 lg:grid-cols-3">
+    <div class="sf-card lg:col-span-2">
+      <div class="sf-card-header">
+        <h2 class="text-lg font-semibold text-slate-900">Listado</h2>
+      </div>
+      <div class="overflow-x-auto">
+        <table class="w-full text-left text-sm">
+          <thead class="bg-emerald-50 text-slate-700">
+            <tr>
+              <th class="px-6 py-3"></th>
+              <th class="px-6 py-3">ID</th>
+              <th class="px-6 py-3">Transacción</th>
+              <th class="px-6 py-3">Riesgo</th>
+              <th class="px-6 py-3">Estado</th>
+              <th class="px-6 py-3">Regla</th>
+              <th class="px-6 py-3"></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr
+              *ngFor="let a of alertas"
+              class="border-t hover:bg-emerald-50/40 cursor-pointer"
+              [class.bg-emerald-100]="a.id === selectedAlertId"
+              (click)="selectAlert(a.id)"
+            >
+              <td class="px-6 py-3">
+                <input
+                  type="checkbox"
+                  class="h-4 w-4 accent-emerald-600"
+                  [checked]="a.id === selectedAlertId"
+                  disabled
+                />
+              </td>
+              <td class="px-6 py-3">{{ a.id }}</td>
+              <td class="px-6 py-3">
+                <span class="font-semibold text-slate-900" [class.text-emerald-900]="a.id === selectedAlertId">{{
+                  a.transaccionId
+                }}</span>
+              </td>
+              <td class="px-6 py-3">{{ a.riesgo }}</td>
+              <td class="px-6 py-3">{{ a.estado }}</td>
+              <td class="px-6 py-3">{{ a.regla }}</td>
+              <td class="px-6 py-3 text-right">
+                <button
+                  class="text-emerald-800 underline"
+                  (click)="$event.stopPropagation(); selectAlert(a.id)"
+                >
+                  Historial
+                </button>
+              </td>
+            </tr>
+            <tr *ngIf="alertas.length === 0" class="border-t">
+              <td class="px-6 py-6 text-center text-slate-500" colspan="7">Sin alertas</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="space-y-4">
+      <div class="sf-card sf-card-body" *ngIf="rol() === 'ADMIN' || rol() === 'ANALISTA'">
+        <h2 class="text-lg font-semibold text-slate-900">Cambiar estado</h2>
+        <p class="mt-1 text-sm text-slate-600">Selecciona una alerta en la tabla y actualiza su estado.</p>
+
+        <div class="mt-4 space-y-3">
+          <div>
+            <label class="mb-1 block text-sm font-medium text-slate-700">Nuevo estado</label>
+            <select class="sf-input" [(ngModel)]="updateModel.nuevoEstado" [disabled]="updating">
+              <option *ngFor="let e of estados()" [value]="e">{{ e }}</option>
+            </select>
+          </div>
+
+          <div>
+            <label class="mb-1 block text-sm font-medium text-slate-700">Comentario</label>
+            <textarea
+              class="sf-input"
+              rows="3"
+              [(ngModel)]="updateModel.comentario"
+              [disabled]="updating"
+            ></textarea>
+          </div>
+
+          <button
+            class="w-full sf-btn-primary"
+            [disabled]="selectedAlertId === null || updating"
+            (click)="actualizarSeleccionada()"
+          >
+            <span *ngIf="!updating; else sending">Actualizar alerta seleccionada</span>
+            <ng-template #sending>Enviando alerta...</ng-template>
+          </button>
+        </div>
+      </div>
+
+      <div class="sf-card sf-card-body">
+        <h2 class="text-lg font-semibold text-slate-900">Historial</h2>
+        <p class="mt-1 text-sm text-slate-600" *ngIf="selectedAlertId === null">Selecciona una alerta para ver su historial.</p>
+
+        <div class="mt-4 space-y-3" *ngIf="selectedAlertId !== null">
+          <div *ngFor="let h of historial" class="rounded-xl border border-emerald-100 bg-emerald-50/40 px-4 py-3 text-sm">
+            <div class="font-medium text-slate-900">{{ h.estadoAnterior }} → {{ h.estadoNuevo }}</div>
+            <div class="mt-1 text-slate-600">{{ h.comentario || 'Sin comentario' }}</div>
+            <div class="mt-1 text-xs text-slate-500">
+              {{ h.analista || '—' }} · {{ h.creadoEn | date: 'short' }}
+            </div>
+          </div>
+          <div *ngIf="historial.length === 0" class="text-sm text-slate-500">Sin historial</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

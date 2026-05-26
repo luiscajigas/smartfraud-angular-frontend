@@ -1,0 +1,125 @@
+<div class="mx-auto max-w-xl sf-card overflow-hidden">
+  <div class="sf-card-header">
+    <h2 class="text-2xl font-semibold text-slate-900">Crear cuenta</h2>
+    <p class="mt-1 text-sm text-slate-600">Regístrate para acceder a SmartFraud.</p>
+  </div>
+
+  <div
+    *ngIf="errorMessage"
+    class="m-6 rounded-xl border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700"
+  >
+    {{ errorMessage }}
+  </div>
+
+  <form class="sf-card-body space-y-4" (ngSubmit)="onSubmit()" #form="ngForm" novalidate>
+    <div>
+      <label class="mb-1 block text-sm font-medium text-slate-700">Usuario</label>
+      <input
+        class="sf-input"
+        name="usuario"
+        [(ngModel)]="model.usuario"
+        required
+        minlength="3"
+        maxlength="5"
+        #usuario="ngModel"
+      />
+      <p class="mt-1 text-xs text-red-600" *ngIf="(usuario.invalid && (usuario.touched || form.submitted))">
+        <span *ngIf="usuario.errors?.['required']">El usuario es obligatorio.</span>
+        <span *ngIf="usuario.errors?.['minlength']">Debe tener mínimo 3 caracteres.</span>
+        <span *ngIf="usuario.errors?.['maxlength']">Debe tener máximo 5 caracteres.</span>
+      </p>
+    </div>
+
+    <div>
+      <label class="mb-1 block text-sm font-medium text-slate-700">Nombre completo</label>
+      <input
+        class="sf-input"
+        name="nombreCompleto"
+        [(ngModel)]="model.nombreCompleto"
+        required
+        maxlength="60"
+        #nombreCompleto="ngModel"
+      />
+      <p class="mt-1 text-xs text-red-600" *ngIf="(nombreCompleto.invalid && (nombreCompleto.touched || form.submitted))">
+        <span *ngIf="nombreCompleto.errors?.['required']">El nombre es obligatorio.</span>
+        <span *ngIf="nombreCompleto.errors?.['maxlength']">Máximo 60 caracteres.</span>
+      </p>
+    </div>
+
+    <div>
+      <label class="mb-1 block text-sm font-medium text-slate-700">Correo</label>
+      <input
+        class="sf-input"
+        name="email"
+        [(ngModel)]="model.email"
+        required
+        type="email"
+        #email="ngModel"
+      />
+      <p class="mt-1 text-xs text-red-600" *ngIf="(email.invalid && (email.touched || form.submitted))">
+        <span *ngIf="email.errors?.['required']">El correo es obligatorio.</span>
+        <span *ngIf="email.errors?.['email']">Debe ser un correo válido (con &#64;).</span>
+      </p>
+    </div>
+
+    <div>
+      <label class="mb-1 block text-sm font-medium text-slate-700">Dirección</label>
+      <input
+        class="sf-input"
+        name="direccion"
+        [(ngModel)]="model.direccion"
+        required
+        maxlength="180"
+        #direccion="ngModel"
+      />
+      <p class="mt-1 text-xs text-red-600" *ngIf="(direccion.invalid && (direccion.touched || form.submitted))">
+        <span *ngIf="direccion.errors?.['required']">La dirección es obligatoria.</span>
+        <span *ngIf="direccion.errors?.['maxlength']">Máximo 180 caracteres.</span>
+      </p>
+    </div>
+
+    <div>
+      <label class="mb-1 block text-sm font-medium text-slate-700">Teléfono</label>
+      <input
+        class="sf-input"
+        name="telefono"
+        [(ngModel)]="model.telefono"
+        required
+        inputmode="numeric"
+        pattern="^[0-9]{10}$"
+        maxlength="10"
+        #telefono="ngModel"
+      />
+      <p class="mt-1 text-xs text-red-600" *ngIf="(telefono.invalid && (telefono.touched || form.submitted))">
+        <span *ngIf="telefono.errors?.['required']">El teléfono es obligatorio.</span>
+        <span *ngIf="telefono.errors?.['pattern']">Debe tener 10 dígitos (solo números).</span>
+      </p>
+    </div>
+
+    <div>
+      <label class="mb-1 block text-sm font-medium text-slate-700">Contraseña</label>
+      <input
+        class="sf-input"
+        type="password"
+        name="contrasena"
+        [(ngModel)]="model.contrasena"
+        required
+        minlength="5"
+        #contrasena="ngModel"
+      />
+      <p class="mt-1 text-xs text-red-600" *ngIf="(contrasena.invalid && (contrasena.touched || form.submitted))">
+        <span *ngIf="contrasena.errors?.['required']">La contraseña es obligatoria.</span>
+        <span *ngIf="contrasena.errors?.['minlength']">Debe tener mínimo 5 caracteres.</span>
+      </p>
+    </div>
+
+    <button class="w-full sf-btn-primary" type="submit" [disabled]="form.invalid">
+      Crear cuenta
+    </button>
+
+    <p class="text-center text-sm text-slate-600">
+      ¿Ya tienes cuenta?
+      <a routerLink="/login" class="font-medium text-slate-900 underline">Inicia sesión</a>
+    </p>
+  </form>
+</div>

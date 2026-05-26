@@ -1,0 +1,104 @@
+<div class="space-y-6">
+  <div class="flex items-center justify-between">
+    <h1 class="text-2xl font-semibold text-slate-900">Transacciones</h1>
+    <button class="sf-btn-ghost" (click)="cargar()">Refrescar</button>
+  </div>
+
+  <div *ngIf="errorMessage" class="rounded-xl border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700">
+    {{ errorMessage }}
+  </div>
+
+  <div class="sf-card sf-card-body">
+    <h2 class="text-lg font-semibold text-slate-900">Crear transacción</h2>
+    <form class="mt-4 grid grid-cols-1 gap-3 md:grid-cols-4" (ngSubmit)="crear()" #f="ngForm" novalidate>
+      <input
+        class="sf-input"
+        type="number"
+        name="monto"
+        [(ngModel)]="form.monto"
+        required
+        min="0.01"
+        step="0.01"
+        placeholder="Monto"
+      />
+      <input
+        class="sf-input"
+        name="moneda"
+        [(ngModel)]="form.moneda"
+        required
+        minlength="3"
+        maxlength="3"
+        placeholder="Moneda (USD)"
+      />
+      <input
+        class="sf-input"
+        name="comercio"
+        [(ngModel)]="form.comercio"
+        required
+        placeholder="Comercio"
+      />
+      <input
+        class="sf-input"
+        name="ubicacion"
+        [(ngModel)]="form.ubicacion"
+        required
+        placeholder="Ubicación (ej: Bogota)"
+      />
+
+      <div class="md:col-span-4">
+        <button
+          class="sf-btn-primary"
+          type="submit"
+          [disabled]="f.invalid || creando"
+        >
+          Crear
+        </button>
+      </div>
+    </form>
+  </div>
+
+  <div class="sf-card">
+    <div class="sf-card-header">
+      <h2 class="text-lg font-semibold text-slate-900">Listado</h2>
+    </div>
+    <div class="overflow-x-auto">
+      <table class="w-full text-left text-sm">
+        <thead class="bg-emerald-50 text-slate-700">
+          <tr>
+            <th class="px-6 py-3"></th>
+            <th class="px-6 py-3">ID</th>
+            <th class="px-6 py-3">Monto</th>
+            <th class="px-6 py-3">Comercio</th>
+            <th class="px-6 py-3">Ubicación</th>
+            <th class="px-6 py-3">Fecha</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr
+            *ngFor="let t of transacciones"
+            class="border-t hover:bg-emerald-50/40 cursor-pointer"
+            [class.bg-emerald-100]="t.id === selectedTransaccionId"
+            (click)="seleccionar(t.id)"
+          >
+            <td class="px-6 py-3">
+              <input
+                type="checkbox"
+                class="h-4 w-4 accent-emerald-600"
+                [checked]="t.id === selectedTransaccionId"
+                disabled
+              />
+            </td>
+            <td class="px-6 py-3">{{ t.id }}</td>
+            <td class="px-6 py-3">{{ t.monto }} {{ t.moneda }}</td>
+            <td class="px-6 py-3">{{ t.comercio }}</td>
+            <td class="px-6 py-3">{{ t.ubicacion }}</td>
+            <td class="px-6 py-3">{{ t.fechaHora | date: 'short' }}</td>
+          </tr>
+          <tr *ngIf="transacciones.length === 0" class="border-t">
+            <td class="px-6 py-6 text-center text-slate-500" colspan="6">Sin transacciones</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

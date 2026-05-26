@@ -1,0 +1,15 @@
+<div class="space-y-6">
+  <h1 class="text-2xl font-semibold text-slate-900">Perfil</h1>
+
+  <div class="sf-card sf-card-body">
+    <div class="text-sm text-slate-500">Usuario</div>
+    <div class="mt-1 text-lg font-semibold text-slate-900">{{ usuario() }}</div>
+
+    <div class="mt-4 text-sm text-slate-500">Rol</div>
+    <div class="mt-1 text-lg font-semibold text-slate-900">{{ rol() }}</div>
+
+    <button class="mt-6 sf-btn-primary" (click)="logout()">
+      Cerrar sesión
+    </button>
+  </div>
+</div>

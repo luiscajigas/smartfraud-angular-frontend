@@ -1,0 +1,77 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap");
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    font-family: Poppins, ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Arial, "Noto Sans", "Liberation Sans",
+      sans-serif;
+  }
+}
+
+@layer components {
+  .sf-container {
+    @apply mx-auto max-w-6xl px-4;
+  }
+
+  .sf-app-bg {
+    @apply min-h-screen bg-gradient-to-b from-emerald-50 via-white to-white text-slate-900;
+  }
+
+  .sf-header {
+    @apply sticky top-0 z-40 border-b border-emerald-100 bg-white/80 backdrop-blur;
+  }
+
+  .sf-brand {
+    @apply inline-flex items-center gap-2 text-lg font-semibold tracking-tight text-slate-900;
+  }
+
+  .sf-nav-link {
+    @apply rounded-lg px-3 py-2 text-sm font-medium text-slate-700 transition hover:bg-emerald-50 hover:text-slate-900;
+  }
+
+  .sf-nav-link-active {
+    @apply bg-emerald-100 text-slate-900;
+  }
+
+  .sf-card {
+    @apply rounded-2xl border border-emerald-100 bg-white shadow-sm;
+  }
+
+  .sf-card-header {
+    @apply border-b border-emerald-100 px-6 py-4;
+  }
+
+  .sf-card-body {
+    @apply p-6;
+  }
+
+  .sf-input {
+    @apply w-full rounded-xl border border-emerald-100 bg-white px-3 py-2 text-sm text-slate-900 outline-none ring-0
+      transition placeholder:text-slate-400 focus:border-emerald-400 focus:ring-2 focus:ring-emerald-200;
+  }
+
+  .sf-label {
+    @apply mb-1 block text-sm font-medium text-slate-700;
+  }
+
+  .sf-btn-primary {
+    @apply inline-flex items-center justify-center rounded-xl bg-emerald-600 px-4 py-2 text-sm font-semibold text-white
+      shadow-sm transition hover:bg-emerald-700 active:bg-emerald-800 disabled:cursor-not-allowed disabled:opacity-50;
+  }
+
+  .sf-btn-ghost {
+    @apply inline-flex items-center justify-center rounded-xl bg-transparent px-3 py-2 text-sm font-semibold text-slate-800
+      transition hover:bg-emerald-50 disabled:cursor-not-allowed disabled:opacity-50;
+  }
+
+  .sf-btn-danger {
+    @apply inline-flex items-center justify-center rounded-xl bg-black px-4 py-2 text-sm font-semibold text-white transition
+      hover:bg-slate-900 active:bg-black disabled:cursor-not-allowed disabled:opacity-50;
+  }
+
+  .sf-pill {
+    @apply inline-flex items-center rounded-full bg-emerald-100 px-3 py-1 text-xs font-semibold text-emerald-900;
+  }
+}

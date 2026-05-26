@@ -1,0 +1,27 @@
+<div class="space-y-6">
+  <h1 class="text-2xl font-semibold text-slate-900">Estadisticas</h1>
+
+  <div class="grid grid-cols-1 gap-4 md:grid-cols-3">
+    <div class="sf-card p-5">
+      <div class="flex items-center justify-between">
+        <div class="text-sm text-slate-500">Transacciones</div>
+        <span class="sf-pill">Total</span>
+      </div>
+      <div class="mt-2 text-3xl font-semibold text-slate-900">{{ stats?.totalTransacciones ?? '—' }}</div>
+    </div>
+    <div class="sf-card p-5">
+      <div class="flex items-center justify-between">
+        <div class="text-sm text-slate-500">Alertas</div>
+        <span class="sf-pill">Total</span>
+      </div>
+      <div class="mt-2 text-3xl font-semibold text-slate-900">{{ stats?.totalAlertas ?? '—' }}</div>
+    </div>
+    <div class="sf-card p-5">
+      <div class="flex items-center justify-between">
+        <div class="text-sm text-slate-500">Pendientes</div>
+        <span class="sf-pill">Acción</span>
+      </div>
+      <div class="mt-2 text-3xl font-semibold text-slate-900">{{ stats?.alertasPendientes ?? '—' }}</div>
+    </div>
+  </div>
+</div>

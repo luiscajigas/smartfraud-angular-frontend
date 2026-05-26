@@ -1,0 +1,13 @@
+<aside class="sf-card sticky top-6 max-h-[calc(100vh-7rem)] overflow-auto p-3">
+  <div class="mb-3 flex items-center justify-between">
+    <span class="text-xs font-semibold uppercase tracking-wide text-slate-500">Menú</span>
+    <button type="button" class="sf-btn-ghost px-3 py-1 text-xs" (click)="cargar()">Recargar</button>
+  </div>
+
+  <div *ngIf="loading" class="text-sm text-slate-500">Cargando menú…</div>
+  <div *ngIf="error" class="text-sm text-red-600">{{ error }}</div>
+
+  <div class="space-y-1" *ngIf="!loading && !error">
+    <app-menu-node *ngFor="let item of menu" [item]="item" [nivel]="0" />
+  </div>
+</aside>

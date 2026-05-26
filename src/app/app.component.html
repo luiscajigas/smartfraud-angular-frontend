@@ -1,0 +1,42 @@
+<div class="sf-app-bg">
+  <header class="sf-header">
+    <div class="sf-container flex items-center justify-between py-3">
+      <a routerLink="/dashboard" class="sf-brand">
+        <span class="inline-flex h-9 w-9 items-center justify-center rounded-xl bg-emerald-600 text-white">SF</span>
+        <span>SmartFraud</span>
+      </a>
+
+      <div class="flex items-center gap-3 text-sm" *ngIf="isLoggedIn(); else guest">
+        <span class="hidden items-center gap-2 text-slate-600 md:inline-flex">
+          <span class="sf-pill">{{ rol() }}</span>
+          <span class="font-medium text-slate-900">{{ usuario() }}</span>
+        </span>
+        <button class="sf-btn-primary" (click)="logout()">Cerrar sesión</button>
+      </div>
+
+      <ng-template #guest>
+        <div class="flex items-center gap-3 text-sm">
+          <a routerLink="/login" class="sf-btn-ghost">Login</a>
+          <a routerLink="/register" class="sf-btn-primary">Registro</a>
+        </div>
+      </ng-template>
+    </div>
+  </header>
+
+  <div class="sf-container py-6" *ngIf="isLoggedIn(); else guestLayout">
+    <div class="flex gap-6">
+      <div class="w-72 shrink-0">
+        <app-sidebar />
+      </div>
+      <main class="min-w-0 flex-1">
+        <router-outlet />
+      </main>
+    </div>
+  </div>
+
+  <ng-template #guestLayout>
+    <main class="sf-container py-6">
+      <router-outlet />
+    </main>
+  </ng-template>
+</div>

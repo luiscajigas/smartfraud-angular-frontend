@@ -1,0 +1,88 @@
+<div class="space-y-6">
+  <h1 class="text-2xl font-semibold text-slate-900">Dashboard</h1>
+
+  <div *ngIf="rol() === 'CLIENTE'" class="sf-card sf-card-body">
+    <div class="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
+      <p class="text-slate-700">
+        Crea transacciones y revisa tus alertas. El sistema aplicará reglas inteligentes y generará alertas cuando detecte
+        riesgo.
+      </p>
+      <div class="flex items-center gap-2">
+        <a routerLink="/transacciones" class="sf-btn-primary">Nueva transacción</a>
+        <a routerLink="/alertas" class="sf-btn-ghost">Ver alertas</a>
+      </div>
+    </div>
+  </div>
+
+  <div *ngIf="rol() !== 'CLIENTE'" class="grid grid-cols-1 gap-4 lg:grid-cols-3">
+    <div class="sf-card p-5">
+      <div class="flex items-center justify-between">
+        <div class="text-sm text-slate-500">Transacciones</div>
+        <span class="sf-pill">Total</span>
+      </div>
+      <div class="mt-2 text-3xl font-semibold text-slate-900">{{ stats?.totalTransacciones ?? '—' }}</div>
+      <div class="mt-4 flex items-center gap-2">
+        <a routerLink="/transacciones" class="sf-btn-ghost">Ver detalle</a>
+      </div>
+    </div>
+    <div class="sf-card p-5">
+      <div class="flex items-center justify-between">
+        <div class="text-sm text-slate-500">Alertas</div>
+        <span class="sf-pill">Total</span>
+      </div>
+      <div class="mt-2 text-3xl font-semibold text-slate-900">{{ stats?.totalAlertas ?? '—' }}</div>
+      <div class="mt-4 flex items-center gap-2">
+        <a routerLink="/alertas" class="sf-btn-ghost">Ir a alertas</a>
+      </div>
+    </div>
+    <div class="sf-card p-5">
+      <div class="flex items-center justify-between">
+        <div class="text-sm text-slate-500">Pendientes</div>
+        <span class="sf-pill">Acción</span>
+      </div>
+      <div class="mt-2 text-3xl font-semibold text-slate-900">{{ stats?.alertasPendientes ?? '—' }}</div>
+      <div class="mt-4 flex items-center gap-2">
+        <a routerLink="/alertas" class="sf-btn-primary">Revisar</a>
+      </div>
+    </div>
+
+    <div class="sf-card lg:col-span-2">
+      <div class="sf-card-header flex items-center justify-between">
+        <h2 class="text-lg font-semibold text-slate-900">Alertas recientes</h2>
+        <a routerLink="/alertas" class="text-sm font-semibold text-emerald-800 underline">Ver todas</a>
+      </div>
+      <div class="overflow-x-auto">
+        <table class="w-full text-left text-sm">
+          <thead class="bg-emerald-50 text-slate-700">
+            <tr>
+              <th class="px-6 py-3">ID</th>
+              <th class="px-6 py-3">Transacción</th>
+              <th class="px-6 py-3">Riesgo</th>
+              <th class="px-6 py-3">Estado</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let a of recentAlertas" class="border-t hover:bg-emerald-50/40">
+              <td class="px-6 py-3">{{ a.id }}</td>
+              <td class="px-6 py-3">{{ a.transaccionId }}</td>
+              <td class="px-6 py-3">{{ a.riesgo }}</td>
+              <td class="px-6 py-3">{{ a.estado }}</td>
+            </tr>
+            <tr *ngIf="recentAlertas.length === 0" class="border-t">
+              <td class="px-6 py-6 text-center text-slate-500" colspan="4">Sin alertas recientes</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="sf-card p-5">
+      <div class="text-sm font-semibold text-slate-900">Acciones rápidas</div>
+      <div class="mt-3 grid gap-2">
+        <a routerLink="/usuarios" class="sf-btn-ghost" *ngIf="rol() === 'ADMIN'">Gestionar usuarios</a>
+        <a routerLink="/estadisticas" class="sf-btn-ghost">Ver estadísticas</a>
+        <a routerLink="/alertas" class="sf-btn-ghost">Revisar alertas</a>
+      </div>
+    </div>
+  </div>
+</div>
