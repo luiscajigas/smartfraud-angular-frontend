@@ -41,7 +41,9 @@
         class="sf-input"
         name="ubicacion"
         [(ngModel)]="form.ubicacion"
+        (input)="onUbicacionInput($any($event.target).value)"
         required
+        pattern="^[A-Za-zÁÉÍÓÚÜÑáéíóúüñ\s.,'-]+$"
         placeholder="Ubicación (ej: Bogota)"
       />
 

@@ -31,6 +31,14 @@ export class TransaccionesComponent implements OnInit {
   transacciones: Transaccion[] = [];
   selectedTransaccionId: number | null = null;
 
+  onUbicacionInput(value: string): void {
+    this.form.ubicacion = this.sanitizeUbicacion(value);
+  }
+
+  private sanitizeUbicacion(value: string): string {
+    return (value ?? '').replace(/[0-9]/g, '').replace(/\s+/g, ' ').trimStart();
+  }
+
   ngOnInit(): void {
     this.cargar();
   }
