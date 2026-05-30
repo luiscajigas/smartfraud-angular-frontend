@@ -1,3 +1,10 @@
+//En lugar de añadir el Token JWT manualmente en cada llamada al servidor, el interceptor "atrapa" 
+// todas las peticiones salientes y les añade el encabezado Authorization: Bearer <token>
+
+//Manejo de Refresh Token : Si el servidor responde con un error 401 (Token expirado), el interceptor es tan inteligente
+//  que detiene la petición, pide un nuevo token al servidor usando el Refresh Token , y luego reintenta la petición original.
+//  ¡Todo esto sin que el usuario se dé cuenta!
+
 import { HttpErrorResponse, HttpInterceptorFn } from '@angular/common/http';
 import { inject } from '@angular/core';
 import { Router } from '@angular/router';
@@ -13,10 +20,10 @@ export const authInterceptor: HttpInterceptorFn = (req, next) => {
   const tokenStorage = inject(TokenStorageService);
   const router = inject(Router);
 
-  const isAuthEndpoint =
+  const isAuthEndpoint = //detectar
     req.url.includes('/auth/login') || req.url.includes('/auth/register') || req.url.includes('/auth/refresh');
 
-  const token = tokenStorage.getToken();
+  const token = tokenStorage.getToken();//obtiene
   const authReq =
     token && !isAuthEndpoint
       ? req.clone({

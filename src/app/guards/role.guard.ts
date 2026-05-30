@@ -1,3 +1,6 @@
+//la ruta /usuarios solo permite el paso si el usuario tiene el rol ADMIN .
+//  Si un CLIENTE intenta escribir la URL manualmente, el Guard lo detendrá.
+
 import { CanActivateFn } from '@angular/router';
 import { inject } from '@angular/core';
 import { Router } from '@angular/router';
